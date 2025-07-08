@@ -1,8 +1,8 @@
 # Context Engineering Template
 
-A comprehensive template for getting started with Context Engineering - the discipline of engineering context for AI coding assistants so they have the information necessary to get the job done end to end.
+A comprehensive template for getting started with Context Engineering - the discipline of engineering context for AI coding assistants so they have all the necessary information to complete tasks from start to finish.
 
-> **Context Engineering is 10x better than prompt engineering and 100x better than vibe coding.**
+> **Context Engineering outperforms prompt engineering by an order of magnitude—and offers far more structure and reliability than informal 'vibe coding'. This template is optimized for use with the Gemini CLI.**
 
 ## 🚀 Quick Start
 
@@ -11,22 +11,26 @@ A comprehensive template for getting started with Context Engineering - the disc
 git clone https://github.com/coleam00/Context-Engineering-Intro.git
 cd Context-Engineering-Intro
 
-# 2. Set up your project rules (optional - template provided)
-# Edit CLAUDE.md to add your project-specific guidelines
+# 2. Install and Authenticate Gemini CLI
+npm install -g @google/gemini-cli
+gemini auth
 
-# 3. Add examples (highly recommended)
-# Place relevant code examples in the examples/ folder
+# 3. Set up your project rules (optional - template provided)
+# Edit GEMINI.md to add your project-specific guidelines
 
-# 4. Create your initial feature request
+# 4. Add examples (highly recommended)
+# Place relevant code examples in the `examples/` folder
+
+# 5. Create your initial feature request
 # Edit INITIAL.md with your feature requirements
 
-# 5. Generate a comprehensive PRP (Product Requirements Prompt)
-# In Claude Code, run:
-/generate-prp INITIAL.md
+# 6. Generate a comprehensive PRP (Product Requirements Prompt)
+# In Gemini CLI, run:
+gemini -p "@./.gemini/commands/generate-prp.md" "INITIAL.md"
 
-# 6. Execute the PRP to implement your feature
-# In Claude Code, run:
-/execute-prp PRPs/your-feature-name.md
+# 7. Execute the PRP to implement your feature
+# In Gemini CLI, run:
+gemini -p "@./.gemini/commands/execute-prp.md" "PRPs/your-feature-name.md"
 ```
 
 ## 📚 Table of Contents
@@ -38,12 +42,13 @@ cd Context-Engineering-Intro
 - [The PRP Workflow](#the-prp-workflow)
 - [Using Examples Effectively](#using-examples-effectively)
 - [Best Practices](#best-practices)
+- [Common Pitfalls](#common-pitfalls)
 
 ## What is Context Engineering?
 
 Context Engineering represents a paradigm shift from traditional prompt engineering:
 
-### Prompt Engineering vs Context Engineering
+### Prompt Engineering vs. Context Engineering
 
 **Prompt Engineering:**
 - Focuses on clever wording and specific phrasing
@@ -59,36 +64,36 @@ Context Engineering represents a paradigm shift from traditional prompt engineer
 
 1. **Reduces AI Failures**: Most agent failures aren't model failures - they're context failures
 2. **Ensures Consistency**: AI follows your project patterns and conventions
-3. **Enables Complex Features**: AI can handle multi-step implementations with proper context
+3. **Enables Complex Features**: AI can handle multi-step implementations effectively when given proper context
 4. **Self-Correcting**: Validation loops allow AI to fix its own mistakes
 
 ## Template Structure
 
-```
+```text
 context-engineering-intro/
-├── .claude/
+├── .gemini/
 │   ├── commands/
-│   │   ├── generate-prp.md    # Generates comprehensive PRPs
-│   │   └── execute-prp.md     # Executes PRPs to implement features
-│   └── settings.local.json    # Claude Code permissions
+│   │   ├── generate-prp.md         # Generates comprehensive PRPs
+│   │   └── execute-prp.md          # Executes PRPs to implement features
+│   └── settings.local.json         # Gemini CLI permissions
 ├── PRPs/
 │   ├── templates/
-│   │   └── prp_base.md       # Base template for PRPs
+│   │   └── prp_base.md             # Base template for PRPs
 │   └── EXAMPLE_multi_agent_prp.md  # Example of a complete PRP
-├── examples/                  # Your code examples (critical!)
-├── CLAUDE.md                 # Global rules for AI assistant
-├── INITIAL.md               # Template for feature requests
-├── INITIAL_EXAMPLE.md       # Example feature request
-└── README.md                # This file
+├── examples/                       # Your code examples (critical!)
+├── GEMINI.md                       # Global rules for AI assistant
+├── INITIAL.md                      # Template for feature requests
+├── INITIAL_EXAMPLE.md              # Example feature request
+└── README.md                       # This file
 ```
 
-This template doesn't focus on RAG and tools with context engineering because I have a LOT more in store for that soon. ;)
+Additional templates and support for RAG-based architectures will be included in a future update.
 
 ## Step-by-Step Guide
 
-### 1. Set Up Global Rules (CLAUDE.md)
+### 1. Set Up Global Rules (GEMINI.md)
 
-The `CLAUDE.md` file contains project-wide rules that the AI assistant will follow in every conversation. The template includes:
+The `GEMINI.md` file contains project-wide rules that the AI assistant will follow in every conversation. The template includes:
 
 - **Project awareness**: Reading planning docs, checking tasks
 - **Code structure**: File size limits, module organization
@@ -127,18 +132,21 @@ PRPs (Product Requirements Prompts) are comprehensive implementation blueprints 
 - Error handling patterns
 - Test requirements
 
-They are similar to PRDs (Product Requirements Documents) but are crafted more specifically to instruct an AI coding assistant.
+They are similar to PRDs (Product Requirements Documents), but PRPs are tailored specifically for AI coding assistants and include strict context and validation logic.
 
-Run in Claude Code:
+Here's a quick comparison:
+
+| PRD (Product Requirements Document) | PRP (Product Requirements Prompt)       |
+|------------------------------------|-----------------------------------------|
+| Written for human developers       | Written to instruct an AI coding agent |
+| May include ambiguous goals        | Requires specificity and validation     |
+| Often high-level and descriptive   | Operational and execution-oriented      |
+
+
+Run in Gemini CLI:
 ```bash
-/generate-prp INITIAL.md
+gemini -p "@./.gemini/commands/generate-prp.md" "INITIAL.md"
 ```
-
-**Note:** The slash commands are custom commands defined in `.claude/commands/`. You can view their implementation:
-- `.claude/commands/generate-prp.md` - See how it researches and creates PRPs
-- `.claude/commands/execute-prp.md` - See how it implements features from PRPs
-
-The `$ARGUMENTS` variable in these commands receives whatever you pass after the command name (e.g., `INITIAL.md` or `PRPs/your-feature.md`).
 
 This command will:
 1. Read your feature request
@@ -151,17 +159,19 @@ This command will:
 Once generated, execute the PRP to implement your feature:
 
 ```bash
-/execute-prp PRPs/your-feature-name.md
+gemini -p "@./.gemini/commands/execute-prp.md" "PRPs/your-feature-name.md"
 ```
 
 The AI coding assistant will:
 1. Read all context from the PRP
-2. Create a detailed implementation plan
+2. Create a detailed feature implementation plan with step-by-step guidance
 3. Execute each step with validation
 4. Run tests and fix any issues
 5. Ensure all success criteria are met
 
 ## Writing Effective INITIAL.md Files
+
+For a broader comparison between human-readable and AI-specific requirements, see the [PRD vs PRP comparison](#3-generate-the-prp) in the Generate the PRP section.
 
 ### Key Sections Explained
 
@@ -252,9 +262,9 @@ The `examples/` folder is **critical** for success. AI coding assistants perform
 
 ```
 examples/
-├── README.md           # Explains what each example demonstrates
-├── cli.py             # CLI implementation pattern
-├── agent/             # Agent architecture patterns
+├── README.md         # Explains what each example demonstrates
+├── cli.py            # CLI implementation pattern
+├── agent/            # Agent architecture patterns
 │   ├── agent.py      # Agent creation pattern
 │   ├── tools.py      # Tool implementation pattern
 │   └── providers.py  # Multi-provider pattern
@@ -285,12 +295,25 @@ examples/
 - Add MCP server resources
 - Reference specific documentation sections
 
-### 5. Customize CLAUDE.md
-- Add your conventions
+### 5. Customize GEMINI.md
+- Add your conventions to `GEMINI.md`
 - Include project-specific rules
 - Define coding standards
 
+## Common Pitfalls
+
+Avoid these frequent mistakes to get the most out of Context Engineering:
+
+- **Skipping examples**: Without patterns to follow, the AI assistant will produce generic or inconsistent code.
+- **Vague FEATURE descriptions**: The more specific your `INITIAL.md`, the better the results.
+- **Neglecting GEMINI.md**: Without rules and structure, implementations may drift from your project's conventions.
+- **Forgetting validations**: If tests or linting steps are not included, PRPs may produce incomplete or broken implementations.
+
 ## Resources
 
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
+- [Gemini CLI Documentation](https://github.com/google/gemini-cli)
 - [Context Engineering Best Practices](https://www.philschmid.de/context-engineering)
+
+---
+
+**Start engineering your context today—and unlock the full potential of AI-assisted development.**

@@ -2,7 +2,10 @@
 
 Implement a feature using using the PRP file.
 
-## PRP File: $ARGUMENTS
+## PRP File
+> The target PRP file to execute (passed as $ARGUMENTS):  
+`$ARGUMENTS`
+
 
 ## Execution Process
 
@@ -10,8 +13,8 @@ Implement a feature using using the PRP file.
    - Read the specified PRP file
    - Understand all context and requirements
    - Follow all instructions in the PRP and extend the research if needed
-   - Ensure you have all needed context to implement the PRP fully
-   - Do more web searches and codebase exploration as needed
+   - Use `WebFetch` if documentation URLs in PRP require loading
+   - Use `tree`, `cat`, or `grep` to explore the codebase as needed
 
 2. **ULTRATHINK**
    - Think hard before you execute the plan. Create a comprehensive plan addressing all requirements.
