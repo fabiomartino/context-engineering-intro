@@ -33,6 +33,7 @@ cd Context-Engineering-Intro
 
 - [What is Context Engineering?](#what-is-context-engineering)
 - [Template Structure](#template-structure)
+- [Integrating into Existing Projects](#integrating-into-existing-projects)
 - [Step-by-Step Guide](#step-by-step-guide)
 - [Writing Effective INITIAL.md Files](#writing-effective-initialmd-files)
 - [The PRP Workflow](#the-prp-workflow)
@@ -87,6 +88,337 @@ context-engineering-intro/
 ```
 
 Additional templates and support for RAG-based architectures (Retrieval-Augmented Generation) will be included in a future update.
+
+## Integrating into Existing Projects
+
+The Context Engineering template can be easily integrated into any existing project. Rather than starting from scratch, you can add the Context Engineering infrastructure to your current codebase and start benefiting from structured AI assistance immediately.
+
+### Integration Steps
+
+#### 1. Add Context Engineering Infrastructure
+
+```bash
+# Navigate to your existing project root
+cd your-existing-project
+
+# Create the Context Engineering directories
+mkdir -p .claude/commands PRPs/templates examples
+
+# Download the essential files from this repository
+curl -O https://raw.githubusercontent.com/your-repository/context-engineering-intro/main/.claude/commands/generate-prp.md
+curl -O https://raw.githubusercontent.com/your-repository/context-engineering-intro/main/.claude/commands/execute-prp.md
+curl -O https://raw.githubusercontent.com/your-repository/context-engineering-intro/main/.claude/settings.local.json
+curl -O https://raw.githubusercontent.com/your-repository/context-engineering-intro/main/PRPs/templates/prp_base.md
+curl -O https://raw.githubusercontent.com/your-repository/context-engineering-intro/main/CLAUDE.md
+curl -O https://raw.githubusercontent.com/your-repository/context-engineering-intro/main/INITIAL_EXAMPLE.md
+
+# Move files to correct locations
+mv generate-prp.md .claude/commands/
+mv execute-prp.md .claude/commands/
+mv settings.local.json .claude/
+mv prp_base.md PRPs/templates/
+```
+
+#### 2. Customize for Your Project
+
+**Edit `CLAUDE.md`** to match your project's conventions:
+
+```markdown
+# Add your project-specific rules
+## Technology Stack
+- Framework: [Your framework - React, Django, etc.]
+- Language: [Your primary language]
+- Testing: [Your testing framework]
+- Database: [Your database]
+
+## Project Structure
+- Follow existing module organization in `/src` or `/app`
+- Maintain current naming conventions
+- Keep existing import patterns
+
+## Existing Patterns to Follow
+- Look at `/src/components/` for component patterns
+- Check `/tests/` for testing approaches
+- Review `/docs/` for documentation style
+```
+
+#### 3. Create Examples from Existing Code
+
+This is the most important step! Extract patterns from your existing codebase:
+
+```bash
+# Create examples directory structure
+mkdir -p examples/components examples/utils examples/tests
+
+# Copy representative examples of your patterns
+cp src/components/UserProfile.js examples/components/
+cp src/utils/apiClient.js examples/utils/
+cp tests/components/UserProfile.test.js examples/tests/
+```
+
+**Create `examples/README.md`** to explain your patterns:
+
+```markdown
+# Project Examples
+
+## Components (`/components/`)
+- `UserProfile.js` - Shows our standard component structure with hooks
+- Follow the prop validation and state management patterns
+
+## Utils (`/utils/`)
+- `apiClient.js` - Our standard API client pattern with error handling
+- Use this authentication and retry logic approach
+
+## Tests (`/tests/`)
+- `UserProfile.test.js` - Our testing conventions with mocking
+- Follow this structure for all component tests
+```
+
+#### 4. Create Your First Feature Request
+
+Create an `INITIAL.md` file for your next feature:
+
+```markdown
+## FEATURE:
+Add a new user settings page with profile editing capabilities
+
+## EXISTING PATTERNS:
+- Follow the component structure shown in examples/components/UserProfile.js
+- Use the API client pattern from examples/utils/apiClient.js  
+- Implement tests following examples/tests/UserProfile.test.js
+
+## INTEGRATION REQUIREMENTS:
+- Must integrate with existing Redux store in /src/store
+- Should use existing design system components from /src/components/ui
+- Follow current routing patterns in /src/App.js
+
+## EXAMPLES:
+- examples/components/ - Component architecture to follow
+- examples/utils/ - API integration patterns
+- examples/tests/ - Testing approach
+
+## DOCUMENTATION:
+- Internal API docs: [link to your API docs]
+- Design system: [link to your design system]
+- Current user flow: [link to existing user management]
+
+## OTHER CONSIDERATIONS:
+- Must maintain backward compatibility with existing user data
+- Should handle edge cases like incomplete profiles
+- Performance: Page should load in under 2 seconds
+```
+
+#### 5. Start Using Context Engineering
+
+Now you can use the Context Engineering workflow:
+
+```bash
+# Generate a comprehensive PRP for your feature
+/generate-prp INITIAL.md
+
+# Execute the PRP to implement the feature
+/execute-prp PRPs/user-settings-page.md
+```
+
+### Integration Best Practices
+
+#### 1. **Inventory Your Existing Patterns**
+
+Before starting, identify what patterns already exist in your codebase:
+
+- **Architecture patterns**: How do you structure modules/components?
+- **API patterns**: How do you handle HTTP requests, authentication?
+- **Testing patterns**: What testing framework and patterns do you use?
+- **Error handling**: How do you handle errors consistently?
+- **State management**: Redux, Context API, or other patterns?
+
+#### 2. **Gradual Integration**
+
+Don't try to convert everything at once:
+
+- Start with **one new feature** using Context Engineering
+- Use it for **refactoring** existing components
+- Gradually build up your examples library
+- Train your team on the new workflow
+
+#### 3. **Maintain Consistency**
+
+- **Update CLAUDE.md** as your project evolves
+- **Keep examples current** with your latest patterns
+- **Document deviations** from standard patterns
+- **Regular reviews** of generated PRPs for quality
+
+#### 4. **Team Adoption**
+
+- **Share examples** of successful Context Engineering implementations
+- **Document wins** - faster development, fewer bugs
+- **Train team members** on writing effective INITIAL.md files
+- **Establish review process** for PRPs before execution
+
+### Example Integration in Different Project Types
+
+#### React/Next.js Project
+```bash
+# Focus on component patterns, hooks, and page structure
+examples/
+├── components/
+│   ├── UserCard.tsx      # Standard component pattern
+│   └── Modal.tsx         # Modal pattern with portal
+├── hooks/
+│   └── useApi.ts         # Custom hook pattern
+├── pages/
+│   └── user/[id].tsx     # Next.js page pattern
+└── tests/
+    └── components/
+        └── UserCard.test.tsx
+```
+
+#### Angular Project
+```bash
+# Focus on components, services, and modules
+examples/
+├── components/
+│   ├── user-card/
+│   │   ├── user-card.component.ts     # Component with lifecycle hooks
+│   │   ├── user-card.component.html   # Template pattern
+│   │   └── user-card.component.scss   # Styling pattern
+│   └── shared/
+│       └── modal.component.ts         # Reusable modal component
+├── services/
+│   ├── user.service.ts                # Service with HTTP client
+│   └── auth.service.ts                # Authentication service
+├── guards/
+│   └── auth.guard.ts                  # Route guard pattern
+├── modules/
+│   └── user.module.ts                 # Feature module pattern
+├── pipes/
+│   └── date-format.pipe.ts            # Custom pipe pattern
+└── tests/
+    ├── user-card.component.spec.ts    # Component testing
+    └── user.service.spec.ts           # Service testing
+```
+
+#### Angular + Ionic Project
+```bash
+# Focus on mobile-first components and Ionic patterns
+examples/
+├── pages/
+│   ├── home/
+│   │   ├── home.page.ts               # Ionic page component
+│   │   ├── home.page.html             # Ionic template with ion-components
+│   │   └── home.page.scss             # Mobile-first styling
+│   └── user-profile/
+│       ├── user-profile.page.ts       # Page with ion-nav lifecycle
+│       └── user-profile.page.html     # Form with ion-input, ion-button
+├── components/
+│   ├── user-card/
+│   │   ├── user-card.component.ts     # Reusable component
+│   │   └── user-card.component.html   # Using ion-card, ion-avatar
+│   └── loading/
+│       └── loading.component.ts       # Custom loading component
+├── services/
+│   ├── api.service.ts                 # HTTP service with capacitor
+│   ├── storage.service.ts             # Ionic storage service
+│   └── camera.service.ts              # Capacitor camera integration
+├── guards/
+│   └── auth.guard.ts                  # Route guard for mobile
+├── capacitor/
+│   └── capacitor.config.ts            # Capacitor configuration
+└── tests/
+    ├── home.page.spec.ts              # Page testing
+    └── api.service.spec.ts            # Service testing with mocks
+```
+
+#### NestJS API Project
+```bash
+# Focus on controllers, services, and modules
+examples/
+├── controllers/
+│   ├── users.controller.ts            # Controller with decorators
+│   └── auth.controller.ts             # Authentication controller
+├── services/
+│   ├── users.service.ts               # Service with dependency injection
+│   ├── auth.service.ts                # JWT authentication service
+│   └── database.service.ts            # Database connection service
+├── modules/
+│   ├── users.module.ts                # Feature module
+│   ├── auth.module.ts                 # Authentication module
+│   └── database.module.ts             # Database module
+├── entities/
+│   ├── user.entity.ts                 # TypeORM entity
+│   └── role.entity.ts                 # Entity with relations
+├── dto/
+│   ├── create-user.dto.ts             # Data transfer object
+│   └── update-user.dto.ts             # Update DTO with validation
+├── guards/
+│   ├── jwt-auth.guard.ts              # JWT authentication guard
+│   └── roles.guard.ts                 # Role-based authorization
+├── interceptors/
+│   └── logging.interceptor.ts         # Request logging interceptor
+├── pipes/
+│   └── validation.pipe.ts             # Custom validation pipe
+├── filters/
+│   └── http-exception.filter.ts       # Exception handling
+└── tests/
+    ├── users.controller.spec.ts       # Controller testing
+    ├── users.service.spec.ts          # Service testing
+    └── e2e/
+        └── users.e2e-spec.ts          # End-to-end testing
+```
+
+#### Django Project
+```bash
+# Focus on models, views, and templates
+examples/
+├── models/
+│   └── user.py           # Model pattern with validation
+├── views/
+│   └── user_views.py     # ViewSet pattern
+├── serializers/
+│   └── user_serializer.py # Serializer pattern
+└── tests/
+    └── test_user_views.py
+```
+
+#### Express.js API
+```bash
+# Focus on routes, middleware, and controllers
+examples/
+├── routes/
+│   └── users.js          # Route pattern
+├── middleware/
+│   └── auth.js           # Authentication middleware
+├── controllers/
+│   └── userController.js # Controller pattern
+└── tests/
+    └── users.test.js
+```
+
+### Migration Checklist
+
+- [ ] Context Engineering directories created
+- [ ] Essential files downloaded and placed correctly  
+- [ ] `CLAUDE.md` customized for your project
+- [ ] Examples extracted from existing codebase
+- [ ] `examples/README.md` created to explain patterns
+- [ ] First `INITIAL.md` written for a new feature
+- [ ] Team trained on Context Engineering workflow
+- [ ] PRP generation and execution tested
+- [ ] Integration documented for future team members
+
+### Common Integration Challenges
+
+**Challenge**: "My existing code doesn't follow consistent patterns"
+**Solution**: Use Context Engineering to establish patterns going forward. Create examples of the patterns you want to adopt, not necessarily what exists.
+
+**Challenge**: "Our codebase is too large to create examples for everything"
+**Solution**: Focus on the most common patterns (components, API calls, tests). You can always add more examples later.
+
+**Challenge**: "Team resistance to new tools"
+**Solution**: Start small with one feature. Show concrete benefits like faster development and fewer bugs before rolling out team-wide.
+
+**Challenge**: "Integration with existing CI/CD"
+**Solution**: PRPs can include validation steps that integrate with your existing pipeline. Update the PRP templates to match your deployment process.
 
 ## Step-by-Step Guide
 
